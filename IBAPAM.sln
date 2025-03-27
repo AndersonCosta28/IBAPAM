@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBAPAM.AppHost", "IBAPAM.AppHost\IBAPAM.AppHost.csproj", "{F85F555B-B8C4-426E-A5EA-4DD107D687F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBAPAM.ServiceDefaults", "IBAPAM.ServiceDefaults\IBAPAM.ServiceDefaults.csproj", "{A4A5EF8C-D686-4B46-AFC0-5F90D9F9AC55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBAPAM.ApiService", "IBAPAM.ApiService\IBAPAM.ApiService.csproj", "{92D40ECF-A0BA-44DA-87A9-028BF11F72C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBAPAM.Tests", "IBAPAM.Tests\IBAPAM.Tests.csproj", "{CF13DBD3-11BD-49C7-980B-8AFAFD27AC8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBAPAM.Shared", "IBAPAM.Shared\IBAPAM.Shared.csproj", "{647DD17E-B88F-4115-95A7-FC5F1151EDD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBAPAM.Web", "IBAPAM.Web\IBAPAM.Web\IBAPAM.Web.csproj", "{C0F1491A-1C2A-4D89-AD5A-552011C9CEA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBAPAM.Web.Client", "IBAPAM.Web\IBAPAM.Web.Client\IBAPAM.Web.Client.csproj", "{B3BFE856-7FC9-4B16-A1B9-5C8CA81D91A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F85F555B-B8C4-426E-A5EA-4DD107D687F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F85F555B-B8C4-426E-A5EA-4DD107D687F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F85F555B-B8C4-426E-A5EA-4DD107D687F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F85F555B-B8C4-426E-A5EA-4DD107D687F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4A5EF8C-D686-4B46-AFC0-5F90D9F9AC55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4A5EF8C-D686-4B46-AFC0-5F90D9F9AC55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4A5EF8C-D686-4B46-AFC0-5F90D9F9AC55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4A5EF8C-D686-4B46-AFC0-5F90D9F9AC55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92D40ECF-A0BA-44DA-87A9-028BF11F72C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92D40ECF-A0BA-44DA-87A9-028BF11F72C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92D40ECF-A0BA-44DA-87A9-028BF11F72C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92D40ECF-A0BA-44DA-87A9-028BF11F72C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF13DBD3-11BD-49C7-980B-8AFAFD27AC8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF13DBD3-11BD-49C7-980B-8AFAFD27AC8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF13DBD3-11BD-49C7-980B-8AFAFD27AC8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF13DBD3-11BD-49C7-980B-8AFAFD27AC8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{647DD17E-B88F-4115-95A7-FC5F1151EDD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647DD17E-B88F-4115-95A7-FC5F1151EDD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647DD17E-B88F-4115-95A7-FC5F1151EDD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647DD17E-B88F-4115-95A7-FC5F1151EDD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0F1491A-1C2A-4D89-AD5A-552011C9CEA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0F1491A-1C2A-4D89-AD5A-552011C9CEA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0F1491A-1C2A-4D89-AD5A-552011C9CEA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0F1491A-1C2A-4D89-AD5A-552011C9CEA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3BFE856-7FC9-4B16-A1B9-5C8CA81D91A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3BFE856-7FC9-4B16-A1B9-5C8CA81D91A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3BFE856-7FC9-4B16-A1B9-5C8CA81D91A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3BFE856-7FC9-4B16-A1B9-5C8CA81D91A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

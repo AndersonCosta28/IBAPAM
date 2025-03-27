@@ -1,0 +1,65 @@
+﻿@page "/publicacoes"
+@using IBAPAM.Shared.Models.PublicacaoDTOs
+@using IBAPAM.Web.Client.Interfaces
+@inject IPublicacaoService PublicacaoService
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+<h1>Listar Publicações</h1>
+<div style="text-align: center; margin-top: 20px;">
+    <button class="btn btn-primary" @onclick="CriarNovaPublicacao">Criar Nova Publicação</button>
+</div>
+@if (publicacoes != null)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var publicacao in publicacoes)
+            {
+                <tr>
+                    <td>@publicacao.Id</td>
+                    <td>@publicacao.Titulo</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" @onclick="@(() => EditarPublicacao(publicacao.Id))">Editar</button>
+                        <button class="btn btn-sm btn-danger" @onclick="@(() => DeletarPublicacao(publicacao.Id))">Deletar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Não há publicações disponíveis.</p>
+}
+
+@code {
+    private IEnumerable<PublicacaoDto> publicacoes = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        publicacoes = await PublicacaoService.GetAllAsync();
+    }
+
+    private async Task EditarPublicacao(int id)
+    {
+        Navigation.NavigateTo($"/publicacoes/editar-publicacao/{id}");
+    }
+
+    private async Task DeletarPublicacao(int id)
+    {
+        await PublicacaoService.DeleteAsync(id);
+        publicacoes = await PublicacaoService.GetAllAsync();
+    }
+
+    // Adicionando novo botão para criar publicação
+    private void CriarNovaPublicacao()
+    {        
+        Navigation.NavigateTo("/publicacoes/criar-publicacao");
+    }
+}

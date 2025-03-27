@@ -1,0 +1,22 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@inject ILogger<RadzenHTMLEditorComponent> _logger
+@rendermode InteractiveAuto
+
+<RadzenHtmlEditor ValueChanged="@this.ValueChanged"
+                  Value="@Value"
+                  UploadUrl="upload/image" />
+@code {
+    [Parameter] public string Value { get; set; }
+
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _logger.LogInformation("First render");
+        }
+        base.OnAfterRender(firstRender);
+    }
+}

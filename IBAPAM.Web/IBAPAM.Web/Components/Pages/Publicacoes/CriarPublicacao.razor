@@ -1,0 +1,29 @@
+﻿@page "/publicacoes/criar-publicacao"
+@using IBAPAM.Shared.Models.PublicacaoDTOs
+@using IBAPAM.Web.Client.Interfaces
+@inject IPublicacaoService PublicacaoService
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+<h1>Criar Publicação</h1>
+
+<form @onsubmit="async () => await Criar()">
+    <div class="mb-3">
+        <label class="form-label">Título:</label>
+        <input class="form-control" type="text" @bind-value="publicacaoDto.Titulo" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Conteúdo:</label>
+        <input class="form-control" type="text" @bind-value="publicacaoDto.Conteudo"></input>
+    </div>
+    <button type="submit" class="btn btn-primary">Criar</button>
+</form>
+
+@code {
+    private PublicacaoCreateDto publicacaoDto = new PublicacaoCreateDto();
+
+    private async Task Criar()
+    {
+        await PublicacaoService.CreateAsync(publicacaoDto);
+        Navigation.NavigateTo("/publicacoes");
+    }
+}

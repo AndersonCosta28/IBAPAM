@@ -1,0 +1,58 @@
+﻿@page "/publicacoes/editar-publicacao/{Id:int}"
+@using IBAPAM.Shared.Models.PublicacaoDTOs
+@using IBAPAM.Web.Client.Components
+@using IBAPAM.Web.Client.Interfaces
+@inject IPublicacaoService PublicacaoService
+@inject NavigationManager Navigation
+@inject ILogger<EditarPublicacao> _logger
+@rendermode InteractiveServer
+@using Radzen.Blazor
+<RadzenText TextStyle="TextStyle.H1">Editar publicação</RadzenText>
+
+<RadzenTemplateForm Submit="atualizar" TItem="PublicacaoUpdateDto">
+    <RadzenRow>
+        <RadzenFormField Text="Título" Variant="Radzen.Variant.Outlined">
+            <ChildContent>
+                <RadzenTextBox Name="Titulo" @bind-Value=@this._publicacaoDto.Titulo />
+            </ChildContent>
+        </RadzenFormField>
+    </RadzenRow>
+    <RadzenRow>
+        <RadzenFormField Text="Conteúdo" Variant="Radzen.Variant.Outlined">
+            <RadzenHTMLEditorComponent Value="@this._publicacaoDto.Conteudo"
+                                       ValueChanged="v=> this._publicacaoDto.Conteudo =v" />
+        </RadzenFormField>
+    </RadzenRow>
+    <RadzenRow>
+        <RadzenButton ButtonType="Radzen.ButtonType.Submit" Click="atualizar">Atualizar</RadzenButton>
+    </RadzenRow>
+</RadzenTemplateForm>
+
+@code {
+    [Parameter] public int Id { get; set; }
+
+    PublicacaoUpdateDto _publicacaoDto { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _logger.LogInformation($"{this.GetType().Name} - {nameof(OnInitializedAsync)}");
+        await buscarPublicacao();
+
+        await base.OnInitializedAsync();
+    }
+
+    async Task buscarPublicacao()
+    {
+        var dto = await PublicacaoService.GetByIdAsync(Id);
+
+        this._publicacaoDto.Id = dto.Id;
+        this._publicacaoDto.Titulo = dto.Titulo;
+        this._publicacaoDto.Conteudo = dto.Conteudo;
+    }
+
+    private async Task atualizar()
+    {
+        await PublicacaoService.UpdateAsync(_publicacaoDto);
+        Navigation.NavigateTo("/publicacoes");
+    }
+}
