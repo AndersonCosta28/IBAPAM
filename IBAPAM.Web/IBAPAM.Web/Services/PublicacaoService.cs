@@ -1,5 +1,6 @@
 using IBAPAM.Shared.Models.PublicacaoDTOs;
 using IBAPAM.Web.Client.Interfaces;
+using Microsoft.AspNetCore.Components;
 
 namespace IBAPAM.Web.Services;
 
@@ -7,14 +8,17 @@ public class PublicacaoService : IPublicacaoService
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger<PublicacaoService> _logger;
+    private readonly NavigationManager _navigationManager;
 
-    public PublicacaoService(IConfiguration configuration, ILogger<PublicacaoService> logger)
+    public PublicacaoService(
+        HttpClient _httpClient,
+        ILogger<PublicacaoService> logger,
+        NavigationManager navigationManager)
     {
-        var apiUrlHttp = configuration["services:apiservice:http:0"];
-        var apiUrlHttps = configuration["services:apiservice:https:0"];
-        this._httpClient = new() { BaseAddress = new Uri(apiUrlHttps) };
+        this._httpClient = _httpClient;
 
         _logger = logger;
+        this._navigationManager = navigationManager;
     }
 
     public async Task<PublicacaoDto> CreateAsync(PublicacaoCreateDto dto)
@@ -88,5 +92,18 @@ public class PublicacaoService : IPublicacaoService
             _logger.LogError(ex, "Erro ao deletar publicação");
             throw;
         }
+    }
+
+    public void NavegarParaTelaDeListagem()
+    {
+        this._navigationManager.NavigateTo("/publicacoes");
+    }
+    public void NavegarParaTelaDeCriacao()
+    {
+        this._navigationManager.NavigateTo("/publicacoes/criar-publicacao");
+    }
+    public void NavegarParaTelaDeEdicao(int id)
+    {
+        this._navigationManager.NavigateTo($"/publicacoes/editar-publicacao/{id}");
     }
 }

@@ -1,5 +1,3 @@
-// PublicacaoDTOs/PublicacaoDto.cs
-
 namespace IBAPAM.Shared.Models.PublicacaoDTOs;
 
 public class PublicacaoDto

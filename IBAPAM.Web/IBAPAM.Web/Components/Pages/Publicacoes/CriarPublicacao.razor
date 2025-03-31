@@ -1,29 +1,43 @@
 ﻿@page "/publicacoes/criar-publicacao"
 @using IBAPAM.Shared.Models.PublicacaoDTOs
+@using IBAPAM.Web.Client.Components
 @using IBAPAM.Web.Client.Interfaces
 @inject IPublicacaoService PublicacaoService
 @inject NavigationManager Navigation
-@rendermode InteractiveServer
-<h1>Criar Publicação</h1>
+@rendermode InteractiveAuto
+<RadzenStack Style="padding: 20px">
+    <RadzenText TextStyle="TextStyle.H3">Criar publicação</RadzenText>
 
-<form @onsubmit="async () => await Criar()">
-    <div class="mb-3">
-        <label class="form-label">Título:</label>
-        <input class="form-control" type="text" @bind-value="publicacaoDto.Titulo" />
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Conteúdo:</label>
-        <input class="form-control" type="text" @bind-value="publicacaoDto.Conteudo"></input>
-    </div>
-    <button type="submit" class="btn btn-primary">Criar</button>
-</form>
+    <RadzenTemplateForm Submit="criar" TItem="PublicacaoUpdateDto">
+        <RadzenStack Gap="20px">
+            <RadzenRow>
+                <RadzenFormField Text="Título" Variant="Radzen.Variant.Outlined">
+                    <ChildContent>
+                        <RadzenTextBox Name="Titulo" @bind-Value=@this._publicacaoDto.Titulo />
+                    </ChildContent>
+                </RadzenFormField>
+            </RadzenRow>
+            <RadzenRow>
+                <RadzenFormField Text="Conteúdo" Variant="Radzen.Variant.Outlined">
+                    <RadzenHTMLEditorComponent Value="@this._publicacaoDto.Conteudo"
+                                               ValueChanged="v=> this._publicacaoDto.Conteudo =v" />
+                </RadzenFormField>
+            </RadzenRow>
+            <RadzenRow>
+                <RadzenButton ButtonType="Radzen.ButtonType.Button" Click="PublicacaoService.NavegarParaTelaDeListagem">Cancelar</RadzenButton>
+                <RadzenButton ButtonType="Radzen.ButtonType.Submit">Criar</RadzenButton>
+            </RadzenRow>
+        </RadzenStack>
+    </RadzenTemplateForm>
+</RadzenStack>
 
 @code {
-    private PublicacaoCreateDto publicacaoDto = new PublicacaoCreateDto();
+    private PublicacaoCreateDto _publicacaoDto = new PublicacaoCreateDto();
 
-    private async Task Criar()
+    private async Task criar()
     {
-        await PublicacaoService.CreateAsync(publicacaoDto);
-        Navigation.NavigateTo("/publicacoes");
+        await PublicacaoService.CreateAsync(_publicacaoDto);
+
+        PublicacaoService.NavegarParaTelaDeListagem();
     }
 }

@@ -4,7 +4,7 @@ using IBAPAM.Web.Services;
 using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.AddServiceDefaults();
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
@@ -12,9 +12,9 @@ builder.Services.AddRazorComponents()
 builder.Services.AddRadzenComponents();
 
 builder.Services.AddScoped<IPublicacaoService, PublicacaoService>();
-//builder.Services.AddHttpClient<IPublicacaoService, PublicacaoService>(
-//    client => client.BaseAddress = new Uri("https+http://apiservice")
-//);
+builder.Services.AddHttpClient<IPublicacaoService, PublicacaoService>(
+    client => client.BaseAddress = new Uri("https+http://apiservice")
+);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -5,9 +5,10 @@
 
 <RadzenHtmlEditor ValueChanged="@this.ValueChanged"
                   Value="@Value"
-                  UploadUrl="upload/image" />
+                  UploadUrl="upload/image" 
+                  Style="min-height: 200px"/>
 @code {
-    [Parameter] public string Value { get; set; }
+    [Parameter] public string Value { get; set; } = string.Empty;
 
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
 

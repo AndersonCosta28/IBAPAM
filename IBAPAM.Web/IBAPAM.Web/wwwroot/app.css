@@ -1,4 +1,9 @@
-h1:focus {
+* {
+    font-family: "Roboto Flex", sans-serif;
+    font-optical-sizing: auto;
+}
+
+/*h1:focus {
     outline: none;
 }
 
@@ -35,4 +40,4 @@ h1:focus {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
-}
+}*/

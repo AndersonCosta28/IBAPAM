@@ -5,29 +5,33 @@
 @inject IPublicacaoService PublicacaoService
 @inject NavigationManager Navigation
 @inject ILogger<EditarPublicacao> _logger
-@rendermode InteractiveServer
-@using Radzen.Blazor
-<RadzenText TextStyle="TextStyle.H1">Editar publicação</RadzenText>
+@rendermode InteractiveAuto
+<RadzenStack Style="padding: 20px">
 
-<RadzenTemplateForm Submit="atualizar" TItem="PublicacaoUpdateDto">
-    <RadzenRow>
-        <RadzenFormField Text="Título" Variant="Radzen.Variant.Outlined">
-            <ChildContent>
-                <RadzenTextBox Name="Titulo" @bind-Value=@this._publicacaoDto.Titulo />
-            </ChildContent>
-        </RadzenFormField>
-    </RadzenRow>
-    <RadzenRow>
-        <RadzenFormField Text="Conteúdo" Variant="Radzen.Variant.Outlined">
-            <RadzenHTMLEditorComponent Value="@this._publicacaoDto.Conteudo"
-                                       ValueChanged="v=> this._publicacaoDto.Conteudo =v" />
-        </RadzenFormField>
-    </RadzenRow>
-    <RadzenRow>
-        <RadzenButton ButtonType="Radzen.ButtonType.Submit" Click="atualizar">Atualizar</RadzenButton>
-    </RadzenRow>
-</RadzenTemplateForm>
+    <RadzenText TextStyle="TextStyle.H3">Editar publicação</RadzenText>
 
+    <RadzenTemplateForm Submit="atualizar" TItem="PublicacaoUpdateDto">
+        <RadzenStack Gap="20px">
+            <RadzenRow>
+                <RadzenFormField Text="Título" Variant="Radzen.Variant.Outlined">
+                    <ChildContent>
+                        <RadzenTextBox Name="Titulo" @bind-Value=@this._publicacaoDto.Titulo />
+                    </ChildContent>
+                </RadzenFormField>
+            </RadzenRow>
+            <RadzenRow>
+                <RadzenFormField Text="Conteúdo" Variant="Radzen.Variant.Outlined">
+                    <RadzenHTMLEditorComponent Value="@this._publicacaoDto.Conteudo"
+                                               ValueChanged="v=> this._publicacaoDto.Conteudo =v" />
+                </RadzenFormField>
+            </RadzenRow>
+            <RadzenRow>
+                <RadzenButton ButtonType="Radzen.ButtonType.Button" Click="PublicacaoService.NavegarParaTelaDeListagem">Cancelar</RadzenButton>
+                <RadzenButton ButtonType="Radzen.ButtonType.Submit">Atualizar</RadzenButton>
+            </RadzenRow>
+        </RadzenStack>
+    </RadzenTemplateForm>
+</RadzenStack>
 @code {
     [Parameter] public int Id { get; set; }
 
@@ -53,6 +57,6 @@
     private async Task atualizar()
     {
         await PublicacaoService.UpdateAsync(_publicacaoDto);
-        Navigation.NavigateTo("/publicacoes");
+        PublicacaoService.NavegarParaTelaDeListagem();
     }
 }

@@ -3,63 +3,67 @@
 @using IBAPAM.Web.Client.Interfaces
 @inject IPublicacaoService PublicacaoService
 @inject NavigationManager Navigation
-@rendermode InteractiveServer
-<h1>Listar Publicações</h1>
-<div style="text-align: center; margin-top: 20px;">
-    <button class="btn btn-primary" @onclick="CriarNovaPublicacao">Criar Nova Publicação</button>
-</div>
-@if (publicacoes != null)
-{
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var publicacao in publicacoes)
-            {
-                <tr>
-                    <td>@publicacao.Id</td>
-                    <td>@publicacao.Titulo</td>
-                    <td>
-                        <button class="btn btn-sm btn-primary" @onclick="@(() => EditarPublicacao(publicacao.Id))">Editar</button>
-                        <button class="btn btn-sm btn-danger" @onclick="@(() => DeletarPublicacao(publicacao.Id))">Deletar</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>Não há publicações disponíveis.</p>
-}
+@rendermode InteractiveAuto
+<RadzenStack Style="padding: 20px">
 
+    <RadzenText TextStyle="TextStyle.DisplayH3">Listar Publicações</RadzenText>
+
+    <RadzenButton Text="Criar Nova Publicação" Click="@PublicacaoService.NavegarParaTelaDeCriacao" Style="width: fit-content" />
+    <RadzenDataGrid style="height: 335px"
+                    @ref="_grid"
+                    IsLoading=@_isLoading
+                    Count="@_count"
+                    Data="@_publicacoes"
+                    LoadData="@LoadData"
+                    AllowSorting="true"
+                    AllowFiltering="true"
+                    AllowPaging="true"
+                    PageSize="4"
+                    PagerHorizontalAlign="HorizontalAlign.Center"
+                    ColumnWidth="200px">
+        <Columns>
+            <RadzenDataGridColumn Property="@nameof(PublicacaoDto.Id)" Filterable="false" Title="ID" Frozen="true" Width="80px" />
+            <RadzenDataGridColumn Property="@nameof(PublicacaoDto.Titulo)" Filterable="false" Title="Título" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn Title="Ações" Filterable="false">
+                <Template Context="publicacao">
+                    <RadzenButton Text="Editar" Click="(e) => PublicacaoService.NavegarParaTelaDeEdicao(publicacao.Id)" Style="margin-bottom: 20px;" />
+                    <RadzenButton Text="Deletar" Click="async (e) => await DeletarPublicacao(publicacao.Id)" Style="margin-bottom: 20px;" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+</RadzenStack>
 @code {
-    private IEnumerable<PublicacaoDto> publicacoes = [];
+    RadzenDataGrid<PublicacaoDto> _grid;
+    int _count;
+    bool _isLoading = false;
+    private IEnumerable<PublicacaoDto> _publicacoes = [];
 
     protected override async Task OnInitializedAsync()
     {
-        publicacoes = await PublicacaoService.GetAllAsync();
-    }
-
-    private async Task EditarPublicacao(int id)
-    {
-        Navigation.NavigateTo($"/publicacoes/editar-publicacao/{id}");
+        _publicacoes = await PublicacaoService.GetAllAsync();
     }
 
     private async Task DeletarPublicacao(int id)
     {
         await PublicacaoService.DeleteAsync(id);
-        publicacoes = await PublicacaoService.GetAllAsync();
+        _publicacoes = await PublicacaoService.GetAllAsync();
     }
 
-    // Adicionando novo botão para criar publicação
-    private void CriarNovaPublicacao()
-    {        
-        Navigation.NavigateTo("/publicacoes/criar-publicacao");
+    async Task LoadData(LoadDataArgs args)
+    {
+        _isLoading = true;
+
+        await Task.Yield();
+
+        var query = await PublicacaoService.GetAllAsync();
+
+        // Important!!! Make sure the Count property of RadzenDataGrid is set.
+        _count = query.Count();
+
+        // Perform paging via Skip and Take.
+        _publicacoes = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
+
+        _isLoading = false;
     }
 }
