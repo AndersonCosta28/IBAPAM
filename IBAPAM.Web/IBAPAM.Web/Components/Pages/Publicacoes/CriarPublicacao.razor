@@ -1,5 +1,5 @@
 ﻿@page "/publicacoes/criar-publicacao"
-@using IBAPAM.Shared.Models.PublicacaoDTOs
+@using IBAPAM.Shared.DTOs.Publicacao
 @using IBAPAM.Web.Client.Components
 @using IBAPAM.Web.Client.Interfaces
 @inject IPublicacaoService PublicacaoService
@@ -8,7 +8,7 @@
 <RadzenStack Style="padding: 20px">
     <RadzenText TextStyle="TextStyle.H3">Criar publicação</RadzenText>
 
-    <RadzenTemplateForm Submit="criar" TItem="PublicacaoUpdateDto">
+    <RadzenTemplateForm Submit="criar" Data="this._publicacaoDto" TItem="PublicacaoCreateRequestDto">
         <RadzenStack Gap="20px">
             <RadzenRow>
                 <RadzenFormField Text="Título" Variant="Radzen.Variant.Outlined">
@@ -32,12 +32,11 @@
 </RadzenStack>
 
 @code {
-    private PublicacaoCreateDto _publicacaoDto = new PublicacaoCreateDto();
+    private PublicacaoCreateRequestDto _publicacaoDto = new PublicacaoCreateRequestDto();
 
-    private async Task criar()
+    private async Task criar(PublicacaoCreateRequestDto dto)
     {
-        await PublicacaoService.CreateAsync(_publicacaoDto);
-
+        await PublicacaoService.CreateAsync(dto);
         PublicacaoService.NavegarParaTelaDeListagem();
     }
 }

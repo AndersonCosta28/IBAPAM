@@ -1,5 +1,5 @@
 using IBAPAM.ApiService.Interfaces;
-using IBAPAM.Shared.Models.PublicacaoDTOs;
+using IBAPAM.Shared.DTOs.Publicacao;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IBAPAM.ApiService.Controllers;
@@ -16,14 +16,14 @@ public class PublicacoesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<PublicacaoDto>> PostPublicacao([FromBody] PublicacaoCreateDto dto)
+    public async Task<ActionResult<PublicacaoCreateResponseDto>> PostPublicacao([FromBody] PublicacaoCreateRequestDto dto)
     {
         var created = await _service.CreateAsync(dto);
         return CreatedAtAction(nameof(PostPublicacao), created.Id, created);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<PublicacaoDto>> GetPublicacao(int id)
+    public async Task<ActionResult<PublicacaoDto>> GetByIdPublicacao(int id)
     {
         var publicacao = await _service.GetByIdAsync(id);
         if (publicacao == null)
@@ -40,7 +40,7 @@ public class PublicacoesController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutPublicacao(int id, PublicacaoUpdateDto dto)
+    public async Task<IActionResult> PutPublicacao(int id, PublicacaoUpdateRequestDto dto)
     {
         if (id != dto.Id)
         {

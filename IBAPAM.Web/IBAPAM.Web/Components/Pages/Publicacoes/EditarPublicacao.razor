@@ -1,16 +1,14 @@
 ﻿@page "/publicacoes/editar-publicacao/{Id:int}"
-@using IBAPAM.Shared.Models.PublicacaoDTOs
+@using IBAPAM.Shared.DTOs.Publicacao
 @using IBAPAM.Web.Client.Components
 @using IBAPAM.Web.Client.Interfaces
 @inject IPublicacaoService PublicacaoService
 @inject NavigationManager Navigation
 @inject ILogger<EditarPublicacao> _logger
-@rendermode InteractiveAuto
+@rendermode InteractiveServer
 <RadzenStack Style="padding: 20px">
-
     <RadzenText TextStyle="TextStyle.H3">Editar publicação</RadzenText>
-
-    <RadzenTemplateForm Submit="atualizar" TItem="PublicacaoUpdateDto">
+    <RadzenTemplateForm Submit="atualizar" Data="this._publicacaoDto" TItem="PublicacaoUpdateRequestDto">
         <RadzenStack Gap="20px">
             <RadzenRow>
                 <RadzenFormField Text="Título" Variant="Radzen.Variant.Outlined">
@@ -26,8 +24,8 @@
                 </RadzenFormField>
             </RadzenRow>
             <RadzenRow>
-                <RadzenButton ButtonType="Radzen.ButtonType.Button" Click="PublicacaoService.NavegarParaTelaDeListagem">Cancelar</RadzenButton>
-                <RadzenButton ButtonType="Radzen.ButtonType.Submit">Atualizar</RadzenButton>
+                <RadzenButton ButtonType="Radzen.ButtonType.Button" Click="PublicacaoService.NavegarParaTelaDeListagem" Text="Cancelar" />
+                <RadzenButton ButtonType="Radzen.ButtonType.Submit" Text="Atualizar" />
             </RadzenRow>
         </RadzenStack>
     </RadzenTemplateForm>
@@ -35,7 +33,7 @@
 @code {
     [Parameter] public int Id { get; set; }
 
-    PublicacaoUpdateDto _publicacaoDto { get; set; } = new();
+    PublicacaoUpdateRequestDto _publicacaoDto { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,9 +52,9 @@
         this._publicacaoDto.Conteudo = dto.Conteudo;
     }
 
-    private async Task atualizar()
+    private async Task atualizar(PublicacaoUpdateRequestDto dto)
     {
-        await PublicacaoService.UpdateAsync(_publicacaoDto);
+        await PublicacaoService.UpdateAsync(dto);
         PublicacaoService.NavegarParaTelaDeListagem();
     }
 }

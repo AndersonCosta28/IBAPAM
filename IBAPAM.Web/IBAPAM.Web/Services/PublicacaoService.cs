@@ -1,4 +1,4 @@
-using IBAPAM.Shared.Models.PublicacaoDTOs;
+using IBAPAM.Shared.DTOs.Publicacao;
 using IBAPAM.Web.Client.Interfaces;
 using Microsoft.AspNetCore.Components;
 
@@ -21,13 +21,13 @@ public class PublicacaoService : IPublicacaoService
         this._navigationManager = navigationManager;
     }
 
-    public async Task<PublicacaoDto> CreateAsync(PublicacaoCreateDto dto)
+    public async Task<PublicacaoCreateResponseDto> CreateAsync(PublicacaoCreateRequestDto dto)
     {
         try
         {
             var response = await _httpClient.PostAsJsonAsync("api/publicacoes", dto);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<PublicacaoDto>();
+            return await response.Content.ReadFromJsonAsync<PublicacaoCreateResponseDto>();
         }
         catch (HttpRequestException ex)
         {
@@ -36,13 +36,13 @@ public class PublicacaoService : IPublicacaoService
         }
     }
 
-    public async Task<PublicacaoDto> GetByIdAsync(int id)
+    public async Task<PublicacaoGetByIdResponseDto> GetByIdAsync(int id)
     {
         try
         {
             var response = await _httpClient.GetAsync($"api/publicacoes/{id}");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<PublicacaoDto>();
+            return await response.Content.ReadFromJsonAsync<PublicacaoGetByIdResponseDto>();
         }
         catch (HttpRequestException ex)
         {
@@ -66,7 +66,7 @@ public class PublicacaoService : IPublicacaoService
         }
     }
 
-    public async Task UpdateAsync(PublicacaoUpdateDto dto)
+    public async Task UpdateAsync(PublicacaoUpdateRequestDto dto)
     {
         try
         {

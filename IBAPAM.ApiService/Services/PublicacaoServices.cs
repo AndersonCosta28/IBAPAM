@@ -1,7 +1,7 @@
 using IBAPAM.ApiService.Data;
 using IBAPAM.ApiService.Interfaces;
 using IBAPAM.ApiService.Models;
-using IBAPAM.Shared.Models.PublicacaoDTOs;
+using IBAPAM.Shared.DTOs.Publicacao;
 using Microsoft.EntityFrameworkCore;
 
 namespace IBAPAM.ApiService.Services;
@@ -15,7 +15,7 @@ public class PublicacaoService : IPublicacaoService
         _context = context;
     }
 
-    public async Task<PublicacaoDto> CreateAsync(PublicacaoCreateDto dto)
+    public async Task<PublicacaoCreateResponseDto> CreateAsync(PublicacaoCreateRequestDto dto)
     {
         var publicacao = new Publicacao
         {
@@ -26,7 +26,7 @@ public class PublicacaoService : IPublicacaoService
         await _context.Publicacoes.AddAsync(publicacao);
         await _context.SaveChangesAsync();
 
-        return new PublicacaoDto
+        return new PublicacaoCreateResponseDto
         {
             Id = publicacao.Id,
             Titulo = publicacao.Titulo,
@@ -34,10 +34,10 @@ public class PublicacaoService : IPublicacaoService
         };
     }
 
-    public async Task<PublicacaoDto> GetByIdAsync(int id)
+    public async Task<PublicacaoGetByIdResponseDto> GetByIdAsync(int id)
     {
         var publicacao = await _context.Publicacoes.FindAsync(id) ?? throw new KeyNotFoundException("Publicação não encontrada");
-        return new PublicacaoDto
+        return new PublicacaoGetByIdResponseDto
         {
             Id = publicacao.Id,
             Titulo = publicacao.Titulo,
@@ -56,7 +56,7 @@ public class PublicacaoService : IPublicacaoService
         });
     }
 
-    public async Task UpdateAsync(PublicacaoUpdateDto dto)
+    public async Task UpdateAsync(PublicacaoUpdateRequestDto dto)
     {
         var publicacao = await _context.Publicacoes.FindAsync(dto.Id) ?? throw new KeyNotFoundException("Publicação não encontrada");
         publicacao.Titulo = dto.Titulo;

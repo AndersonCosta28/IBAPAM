@@ -1,4 +1,4 @@
-﻿using IBAPAM.Shared.Models.PublicacaoDTOs;
+﻿using IBAPAM.Shared.DTOs.Publicacao;
 
 namespace IBAPAM.Web.Client.Interfaces;
 
@@ -7,9 +7,9 @@ public interface IPublicacaoService
     void NavegarParaTelaDeListagem();
     void NavegarParaTelaDeCriacao();
     void NavegarParaTelaDeEdicao(int id);
-    Task<PublicacaoDto> CreateAsync(PublicacaoCreateDto dto);
-    Task<PublicacaoDto> GetByIdAsync(int id);
+    Task<PublicacaoCreateResponseDto> CreateAsync(PublicacaoCreateRequestDto dto);
+    Task<PublicacaoGetByIdResponseDto> GetByIdAsync(int id);
     Task<IEnumerable<PublicacaoDto>> GetAllAsync();
-    Task UpdateAsync(PublicacaoUpdateDto dto);
+    Task UpdateAsync(PublicacaoUpdateRequestDto dto);
     Task DeleteAsync(int id);
 }

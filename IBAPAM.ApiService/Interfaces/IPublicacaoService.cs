@@ -1,14 +1,12 @@
-using System;
-using IBAPAM.ApiService.Models;
-using IBAPAM.Shared.Models.PublicacaoDTOs;
+using IBAPAM.Shared.DTOs.Publicacao;
 
 namespace IBAPAM.ApiService.Interfaces;
 
 public interface IPublicacaoService
 {
-    Task<PublicacaoDto> CreateAsync(PublicacaoCreateDto publicacao);
-    Task<PublicacaoDto> GetByIdAsync(int id);
+    Task<PublicacaoCreateResponseDto> CreateAsync(PublicacaoCreateRequestDto publicacao);
+    Task<PublicacaoGetByIdResponseDto> GetByIdAsync(int id);
     Task<IEnumerable<PublicacaoDto>> GetAllAsync();
-    Task UpdateAsync(PublicacaoUpdateDto publicacao);
+    Task UpdateAsync(PublicacaoUpdateRequestDto publicacao);
     Task DeleteAsync(int id);
 }

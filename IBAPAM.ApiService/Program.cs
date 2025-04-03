@@ -1,6 +1,8 @@
 using IBAPAM.ApiService.Data;
 using IBAPAM.ApiService.Interfaces;
 using IBAPAM.ApiService.Services;
+using IBAPAM.ServiceDefaults;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,6 @@ builder.Services.AddOpenApi();
 
 builder.AddNpgsqlDbContext<ApplicationDbContext>("ibapamdb");
 builder.Services.AddControllers();
-
 builder.Services.AddScoped<IPublicacaoService, PublicacaoService>();
 var app = builder.Build();
 
@@ -25,6 +26,7 @@ app.UseExceptionHandler();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.MapControllers();
